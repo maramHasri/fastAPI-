@@ -7,6 +7,7 @@ import bcrypt
 import jwt
 import datetime
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 # إعداد التطبيق
 app = FastAPI(
@@ -156,17 +157,18 @@ if __name__ == "__main__":
         import uvicorn
         print("Starting the application...")
         print("Database URL:", DATABASE_URL)
-        print("Server will run on http://localhost:8080")
+        port = int(os.environ.get("PORT", 8080))
+        print(f"Server will run on http://0.0.0.0:{port}")
         uvicorn.run(
             app,
-            host="localhost",
-            port=8080,
+            host="0.0.0.0",
+            port=port,
             log_level="info",
-            reload=False  # Disable reload for stability
+            reload=False
         )
     except Exception as e:
         print(f"Error starting the application: {e}")
         print("Please check if:")
-        print("1. Port 8001 is not already in use")
+        print("1. Port is not already in use")
         print("2. You have all required packages installed")
         print("3. You have proper permissions to run the server")
